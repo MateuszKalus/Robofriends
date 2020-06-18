@@ -1,44 +1,44 @@
 import React from "react";
-import CardList from './CardList'
-import SearchBox from './SearchBox'
-import robots from "./robots";
-import Scroll from './Scroll';
-
+import CardList from '../components/CardList'
+import SearchBox from '../components/SearchBox'
+import './App.css'
+import Scroll from '../components/Scroll';
 
 
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            robots: robots,
+            robots: [],
             searchfield: ''
         }
+    }
 
+    componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
             .then(users => this.setState({robots: users}))
     }
 
-    componentDidMount() {
 
-    }
 
     onSearchChange = (event) => {
         const input_value = event.target.value;
         this.setState({searchfield: input_value});
-        console.log("w funkcji: ", this.state.searchfield)
     }
 
     render() {
+        const {searchfield, robots} = this.state;
 
-        const filteredRobots = this.state.robots.filter(robot => {
-            return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+        const filteredRobots = robots.filter(robot => {
+            return robot.name.toLowerCase().includes(searchfield.toLowerCase())
         })
 
-        console.log(this.state.searchfield)
         return (
-            <div className='tc'>
-                <h1 className='f1-l'>Robofriends</h1>
+            <div className='tc selectDisable main'>
+                <div className='web-title'>
+                    <div className='ddd'></div>
+                </div>
                 <SearchBox func={this.onSearchChange}/>
                 <Scroll>
                     <CardList robots={filteredRobots}/>

@@ -16,7 +16,7 @@ const CardList = ({robots}) => {
 
 
     return (
-        <div className='selectDisable tc card-container'>
+        <div className='tc card-container'>
             {cards}
         </div>
     )
